@@ -1,0 +1,53 @@
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>webapps</title>
+</head>
+<body>
+<div th:replace="fragments/header :: myHeaderWithLocale">
+</div>
+<div class="container">
+    <h1>Registry Customer</h1>
+    <form th:id="customerForm" action="#" th:action="@{/registry}" th:object="${customer}" method="post">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label-lg">User Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{userName}">
+            </div>
+            <ul>
+                <li th:each="err : ${#fields.errors('userName')}" th:text="${err}" />
+            </ul>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label-lg">Pass Word</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" th:field="*{password}">
+            </div>
+            <ul>
+                <li th:each="err : ${#fields.errors('password')}" th:text="${err}" />
+            </ul>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="button" id="bth-submit" onclick="submitForm()"
+                        class="btn btn-primary btn-lg">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+<!--<div th:replace="fragments/footer :: myFooter"></div>-->
+</body>
+<script>
+    function submitForm() {
+        const customerForm = document.getElementById('customerForm');
+        customerForm.submit();
+        document.getElementsByTagName('input').value = '';
+        customerForm.reset();
+        window.onload = function () {
+            customerForm.reset();
+            document.getElementsByTagName('input').value = '';
+        }
+      //  customerForm.reset();
+        return false;
+    }
+</script>
+</html>
